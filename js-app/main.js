@@ -11,10 +11,19 @@ button.addEventListener("click", () => {
         .then(beanVarieties => {
             console.log(beanVarieties);
             listElement.innerHTML = beanVarieties.map((beanVarietyObject) => {
+                const list = () => {
+                    if (beanVarietyObject.notes !== null) {
+                        return beanVarietyObject.notes
+                    } else {
+                        return `N/A`
+                    }
+                }
                 return `
                 <div>
-                <div>${beanVarietyObject.Name}</div>
-                <div>${beanVarietyObject.Name}</div>
+                    <br />
+                    <div>Name: ${beanVarietyObject.name}</div>
+                    <div>Region: ${beanVarietyObject.region}</div>
+                    <div>Notes: ${list()}</div>
                 </div>
                 `;
             })
@@ -30,6 +39,17 @@ const coffeeButton = document.querySelector("#run-coffee-button");
 coffeeButton.addEventListener("click", () => {
     getAllCoffee().then(coffee => {
         console.log(coffee);
+        listElement.innerHTML = coffee.map((c) => {
+            return `
+                <div>
+                    <br />
+                    <div>Coffee: ${c.title}</div>
+                    <div>Variety Name: ${c.beanVariety.name}</div>
+                    
+                </div>
+                `;
+        })
+            .join("");
     })
 });
 
